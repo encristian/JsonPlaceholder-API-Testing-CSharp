@@ -1,15 +1,16 @@
 ﻿using RestSharp;
 using System.Net;
 using System.Text.Json;
+using Reqres_API_Testing_CSharp.Base;
 
 namespace Reqres_API_Testing_CSharp;
 
-public class UsersTests
+public class UsersTests : ApiTestBase
 {
     [Test]
     public async Task GetUsers_ShouldReturnSuccessStatusCode()
     {
-        using var client = new RestClient("https://jsonplaceholder.typicode.com");
+        using var client = CreateClient();
 
         var request = new RestRequest("/users", Method.Get);
 
@@ -22,7 +23,7 @@ public class UsersTests
     [Test]
     public async Task GetSingleUser_ShouldReturnUserDetails()
     {
-        using var client = new RestClient("https://jsonplaceholder.typicode.com");
+        using var client = CreateClient();
 
         var request = new RestRequest("/users/1", Method.Get);
 
@@ -45,7 +46,7 @@ public class UsersTests
     [Test]
     public async Task GetSingleUser_WithInvalidId_ShouldReturnNotFound()
     {
-        using var client = new RestClient("https://jsonplaceholder.typicode.com");
+        using var client = CreateClient();
 
         var request = new RestRequest("/users/999", Method.Get);
 

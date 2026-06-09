@@ -1,15 +1,16 @@
 ﻿using RestSharp;
 using System.Net;
 using System.Text.Json;
+using Reqres_API_Testing_CSharp.Base;
 
 namespace Reqres_API_Testing_CSharp;
 
-public class CreateUserTests
+public class CreateUserTests : ApiTestBase
 {
     [Test]
     public async Task CreateUser_ShouldReturnCreatedStatusCode()
     {
-        using var client = new RestClient("https://jsonplaceholder.typicode.com");
+        using var client = CreateClient();
 
         var request = new RestRequest("/users", Method.Post);
 

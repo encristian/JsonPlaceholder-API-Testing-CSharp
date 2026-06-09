@@ -1,15 +1,16 @@
-﻿using RestSharp;
+﻿using Reqres_API_Testing_CSharp.Base;
+using RestSharp;
 using System.Net;
 using System.Text.Json;
 
 namespace Reqres_API_Testing_CSharp;
 
-public class UpdateUserTests
+public class UpdateUserTests : ApiTestBase
 {
     [Test]
     public async Task UpdateUser_ShouldReturnUpdatedUserData()
     {
-        using var client = new RestClient("https://jsonplaceholder.typicode.com");
+        using var client = CreateClient();
 
         var request = new RestRequest("/users/1", Method.Put);
 
