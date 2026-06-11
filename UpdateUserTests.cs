@@ -1,4 +1,5 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
+using Reqres_API_Testing_CSharp.Models;
 using RestSharp;
 using System.Net;
 using System.Text.Json;
@@ -14,13 +15,15 @@ public class UpdateUserTests : ApiTestBase
 
         var request = new RestRequest("/users/1", Method.Put);
 
-        request.AddJsonBody(new
+        var requestBody = new UpdateUserRequest
         {
-            id = 1,
-            name = "Chris Updated",
-            username = "chrisupdated",
-            email = "chris.updated@example.com"
-        });
+            Id = 1,
+            Name = "Chris Updated",
+            Username = "chrisupdated",
+            Email = "chris.updated@example.com"
+        };
+
+        request.AddJsonBody(requestBody);
 
         var response = await client.ExecuteAsync(request);
 

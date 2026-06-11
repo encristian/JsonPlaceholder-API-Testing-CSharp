@@ -1,7 +1,8 @@
-﻿using RestSharp;
+﻿using Reqres_API_Testing_CSharp.Base;
+using Reqres_API_Testing_CSharp.Models;
+using RestSharp;
 using System.Net;
 using System.Text.Json;
-using Reqres_API_Testing_CSharp.Base;
 
 namespace Reqres_API_Testing_CSharp;
 
@@ -14,12 +15,14 @@ public class CreateUserTests : ApiTestBase
 
         var request = new RestRequest("/users", Method.Post);
 
-        request.AddJsonBody(new
+        var requestBody = new CreateUserRequest
         {
-            name = "Chris Green",
-            username = "chrisgreen",
-            email = "chris.green@example.com"
-        });
+            Name = "Chris Green",
+            Username = "chrisgreen",
+            Email = "chris.green@example.com"
+        };
+
+        request.AddJsonBody(requestBody);
 
         var response = await client.ExecuteAsync(request);
 
