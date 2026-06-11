@@ -1,7 +1,7 @@
-﻿using RestSharp;
+﻿using Reqres_API_Testing_CSharp.Base;
+using Reqres_API_Testing_CSharp.Models;
+using RestSharp;
 using System.Net;
-using System.Text.Json;
-using Reqres_API_Testing_CSharp.Base;
 
 namespace Reqres_API_Testing_CSharp;
 
@@ -18,6 +18,11 @@ public class UsersTests : ApiTestBase
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
+
+        var users = DeserializeResponse<List<UserResponse>>(response.Content!);
+
+        Assert.That(users, Is.Not.Null);
+        Assert.That(users!, Has.Count.EqualTo(10));
     }
 
     [Test]
@@ -32,15 +37,12 @@ public class UsersTests : ApiTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
 
-        using JsonDocument json = JsonDocument.Parse(response.Content!);
+        var user = DeserializeResponse<UserResponse>(response.Content!);
 
-        string name = json.RootElement.GetProperty("name").GetString()!;
-        string username = json.RootElement.GetProperty("username").GetString()!;
-        string email = json.RootElement.GetProperty("email").GetString()!;
-
-        Assert.That(name, Is.EqualTo("Leanne Graham"));
-        Assert.That(username, Is.EqualTo("Bret"));
-        Assert.That(email, Is.EqualTo("Sincere@april.biz"));
+        Assert.That(user, Is.Not.Null);
+        Assert.That(user!.Name, Is.EqualTo("Leanne Graham"));
+        Assert.That(user.Username, Is.EqualTo("Bret"));
+        Assert.That(user.Email, Is.EqualTo("Sincere@april.biz"));
     }
 
     [Test]

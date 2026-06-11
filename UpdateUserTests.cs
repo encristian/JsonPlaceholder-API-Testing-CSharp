@@ -2,7 +2,6 @@
 using Reqres_API_Testing_CSharp.Models;
 using RestSharp;
 using System.Net;
-using System.Text.Json;
 
 namespace Reqres_API_Testing_CSharp;
 
@@ -18,9 +17,9 @@ public class UpdateUserTests : ApiTestBase
         var requestBody = new UpdateUserRequest
         {
             Id = 1,
-            Name = "Chris Updated",
-            Username = "chrisupdated",
-            Email = "chris.updated@example.com"
+            Name = "Chris G",
+            Username = "chrisg",
+            Email = "chris.g@example.com"
         };
 
         request.AddJsonBody(requestBody);
@@ -30,16 +29,12 @@ public class UpdateUserTests : ApiTestBase
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
 
-        using JsonDocument json = JsonDocument.Parse(response.Content!);
+        var updatedUser = DeserializeResponse<UserResponse>(response.Content!);
 
-        int id = json.RootElement.GetProperty("id").GetInt32();
-        string name = json.RootElement.GetProperty("name").GetString()!;
-        string username = json.RootElement.GetProperty("username").GetString()!;
-        string email = json.RootElement.GetProperty("email").GetString()!;
-
-        Assert.That(id, Is.EqualTo(1));
-        Assert.That(name, Is.EqualTo("Chris Updated"));
-        Assert.That(username, Is.EqualTo("chrisupdated"));
-        Assert.That(email, Is.EqualTo("chris.updated@example.com"));
+        Assert.That(updatedUser, Is.Not.Null);
+        Assert.That(updatedUser!.Id, Is.EqualTo(1));
+        Assert.That(updatedUser.Name, Is.EqualTo("Chris G"));
+        Assert.That(updatedUser.Username, Is.EqualTo("chrisg"));
+        Assert.That(updatedUser.Email, Is.EqualTo("chris.g@example.com"));
     }
 }
