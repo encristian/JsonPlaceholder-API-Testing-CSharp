@@ -2,7 +2,6 @@
 using Reqres_API_Testing_CSharp.Constants;
 using Reqres_API_Testing_CSharp.Models;
 using Reqres_API_Testing_CSharp.TestData;
-using RestSharp;
 using System.Net;
 
 namespace Reqres_API_Testing_CSharp;
@@ -12,11 +11,7 @@ public class UsersTests : ApiTestBase
     [Test]
     public async Task GetUsers_ShouldReturnSuccessStatusCode()
     {
-        using var client = CreateClient();
-
-        var request = new RestRequest(ApiEndpoints.Users, Method.Get);
-
-        var response = await client.ExecuteAsync(request);
+        var response = await GetAsync(ApiEndpoints.Users);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
@@ -30,11 +25,7 @@ public class UsersTests : ApiTestBase
     [Test]
     public async Task GetSingleUser_ShouldReturnUserDetails()
     {
-        using var client = CreateClient();
-
-        var request = new RestRequest(ApiEndpoints.UserById(UserTestData.ExistingUserId), Method.Get);
-
-        var response = await client.ExecuteAsync(request);
+        var response = await GetAsync(ApiEndpoints.UserById(UserTestData.ExistingUserId));
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
@@ -50,11 +41,7 @@ public class UsersTests : ApiTestBase
     [Test]
     public async Task GetSingleUser_WithInvalidId_ShouldReturnNotFound()
     {
-        using var client = CreateClient();
-
-        var request = new RestRequest(ApiEndpoints.UserById(UserTestData.NonExistingUserId), Method.Get);
-
-        var response = await client.ExecuteAsync(request);
+        var response = await GetAsync(ApiEndpoints.UserById(UserTestData.NonExistingUserId));
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }

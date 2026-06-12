@@ -21,4 +21,46 @@ public class ApiTestBase
     {
         return JsonSerializer.Deserialize<T>(responseContent, JsonOptions);
     }
+
+    protected async Task<RestResponse> GetAsync(string endpoint)
+    {
+        using var client = CreateClient();
+
+        var request = new RestRequest(endpoint, Method.Get);
+
+        return await client.ExecuteAsync(request);
+    }
+
+    protected async Task<RestResponse> PostAsync<TRequest>(string endpoint, TRequest body)
+        where TRequest : class
+    {
+        using var client = CreateClient();
+
+        var request = new RestRequest(endpoint, Method.Post);
+
+        request.AddJsonBody(body);
+
+        return await client.ExecuteAsync(request);
+    }
+
+    protected async Task<RestResponse> PutAsync<TRequest>(string endpoint, TRequest body)
+        where TRequest : class
+    {
+        using var client = CreateClient();
+
+        var request = new RestRequest(endpoint, Method.Put);
+
+        request.AddJsonBody(body);
+
+        return await client.ExecuteAsync(request);
+    }
+
+    protected async Task<RestResponse> DeleteAsync(string endpoint)
+    {
+        using var client = CreateClient();
+
+        var request = new RestRequest(endpoint, Method.Delete);
+
+        return await client.ExecuteAsync(request);
+    }
 }
