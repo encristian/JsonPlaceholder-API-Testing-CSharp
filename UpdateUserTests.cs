@@ -1,6 +1,7 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
 using Reqres_API_Testing_CSharp.Constants;
 using Reqres_API_Testing_CSharp.Models;
+using Reqres_API_Testing_CSharp.TestData;
 using RestSharp;
 using System.Net;
 
@@ -13,15 +14,9 @@ public class UpdateUserTests : ApiTestBase
     {
         using var client = CreateClient();
 
-        var request = new RestRequest(ApiEndpoints.UserById(1), Method.Put);
+        var requestBody = UserTestData.UpdatedUser;
 
-        var requestBody = new UpdateUserRequest
-        {
-            Id = 1,
-            Name = "Chris Updated",
-            Username = "chrisupdated",
-            Email = "chris.updated@example.com"
-        };
+        var request = new RestRequest(ApiEndpoints.UserById(requestBody.Id), Method.Put);
 
         request.AddJsonBody(requestBody);
 
@@ -33,9 +28,9 @@ public class UpdateUserTests : ApiTestBase
         var updatedUser = DeserializeResponse<UserResponse>(response.Content!);
 
         Assert.That(updatedUser, Is.Not.Null);
-        Assert.That(updatedUser!.Id, Is.EqualTo(1));
-        Assert.That(updatedUser.Name, Is.EqualTo("Chris Updated"));
-        Assert.That(updatedUser.Username, Is.EqualTo("chrisupdated"));
-        Assert.That(updatedUser.Email, Is.EqualTo("chris.updated@example.com"));
+        Assert.That(updatedUser!.Id, Is.EqualTo(requestBody.Id));
+        Assert.That(updatedUser.Name, Is.EqualTo(requestBody.Name));
+        Assert.That(updatedUser.Username, Is.EqualTo(requestBody.Username));
+        Assert.That(updatedUser.Email, Is.EqualTo(requestBody.Email));
     }
 }

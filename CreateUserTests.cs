@@ -1,6 +1,7 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
 using Reqres_API_Testing_CSharp.Constants;
 using Reqres_API_Testing_CSharp.Models;
+using Reqres_API_Testing_CSharp.TestData;
 using RestSharp;
 using System.Net;
 
@@ -15,12 +16,7 @@ public class CreateUserTests : ApiTestBase
 
         var request = new RestRequest(ApiEndpoints.Users, Method.Post);
 
-        var requestBody = new CreateUserRequest
-        {
-            Name = "Chris Green",
-            Username = "chrisgreen",
-            Email = "chris.green@example.com"
-        };
+        var requestBody = UserTestData.NewUser;
 
         request.AddJsonBody(requestBody);
 
@@ -32,9 +28,9 @@ public class CreateUserTests : ApiTestBase
         var createdUser = DeserializeResponse<UserResponse>(response.Content!);
 
         Assert.That(createdUser, Is.Not.Null);
-        Assert.That(createdUser!.Name, Is.EqualTo("Chris Green"));
-        Assert.That(createdUser.Username, Is.EqualTo("chrisgreen"));
-        Assert.That(createdUser.Email, Is.EqualTo("chris.green@example.com"));
+        Assert.That(createdUser!.Name, Is.EqualTo(requestBody.Name));
+        Assert.That(createdUser.Username, Is.EqualTo(requestBody.Username));
+        Assert.That(createdUser.Email, Is.EqualTo(requestBody.Email));
         Assert.That(createdUser.Id, Is.GreaterThan(0));
     }
 }

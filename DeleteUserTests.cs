@@ -1,5 +1,6 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
 using Reqres_API_Testing_CSharp.Constants;
+using Reqres_API_Testing_CSharp.TestData;
 using RestSharp;
 using System.Net;
 
@@ -12,7 +13,7 @@ public class DeleteUserTests : ApiTestBase
     {
         using var client = CreateClient();
 
-        var request = new RestRequest(ApiEndpoints.UserById(1), Method.Delete);
+        var request = new RestRequest(ApiEndpoints.UserById(UserTestData.ExistingUserId), Method.Delete);
 
         var response = await client.ExecuteAsync(request);
 

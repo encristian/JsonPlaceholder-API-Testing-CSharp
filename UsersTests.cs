@@ -1,6 +1,7 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
 using Reqres_API_Testing_CSharp.Constants;
 using Reqres_API_Testing_CSharp.Models;
+using Reqres_API_Testing_CSharp.TestData;
 using RestSharp;
 using System.Net;
 
@@ -31,7 +32,7 @@ public class UsersTests : ApiTestBase
     {
         using var client = CreateClient();
 
-        var request = new RestRequest(ApiEndpoints.UserById(1), Method.Get);
+        var request = new RestRequest(ApiEndpoints.UserById(UserTestData.ExistingUserId), Method.Get);
 
         var response = await client.ExecuteAsync(request);
 
@@ -41,9 +42,9 @@ public class UsersTests : ApiTestBase
         var user = DeserializeResponse<UserResponse>(response.Content!);
 
         Assert.That(user, Is.Not.Null);
-        Assert.That(user!.Name, Is.EqualTo("Leanne Graham"));
-        Assert.That(user.Username, Is.EqualTo("Bret"));
-        Assert.That(user.Email, Is.EqualTo("Sincere@april.biz"));
+        Assert.That(user!.Name, Is.EqualTo(UserTestData.ExpectedUserName));
+        Assert.That(user.Username, Is.EqualTo(UserTestData.ExpectedUsername));
+        Assert.That(user.Email, Is.EqualTo(UserTestData.ExpectedUserEmail));
     }
 
     [Test]
@@ -51,7 +52,7 @@ public class UsersTests : ApiTestBase
     {
         using var client = CreateClient();
 
-        var request = new RestRequest(ApiEndpoints.UserById(999), Method.Get);
+        var request = new RestRequest(ApiEndpoints.UserById(UserTestData.NonExistingUserId), Method.Get);
 
         var response = await client.ExecuteAsync(request);
 
