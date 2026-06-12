@@ -1,4 +1,5 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
+using Reqres_API_Testing_CSharp.Constants;
 using Reqres_API_Testing_CSharp.Models;
 using RestSharp;
 using System.Net;
@@ -12,7 +13,7 @@ public class UsersTests : ApiTestBase
     {
         using var client = CreateClient();
 
-        var request = new RestRequest("/users", Method.Get);
+        var request = new RestRequest(ApiEndpoints.Users, Method.Get);
 
         var response = await client.ExecuteAsync(request);
 
@@ -30,7 +31,7 @@ public class UsersTests : ApiTestBase
     {
         using var client = CreateClient();
 
-        var request = new RestRequest("/users/1", Method.Get);
+        var request = new RestRequest(ApiEndpoints.UserById(1), Method.Get);
 
         var response = await client.ExecuteAsync(request);
 
@@ -50,7 +51,7 @@ public class UsersTests : ApiTestBase
     {
         using var client = CreateClient();
 
-        var request = new RestRequest("/users/999", Method.Get);
+        var request = new RestRequest(ApiEndpoints.UserById(999), Method.Get);
 
         var response = await client.ExecuteAsync(request);
 

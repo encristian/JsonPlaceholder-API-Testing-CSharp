@@ -1,4 +1,5 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
+using Reqres_API_Testing_CSharp.Constants;
 using Reqres_API_Testing_CSharp.Models;
 using RestSharp;
 using System.Net;
@@ -12,7 +13,7 @@ public class CreateUserTests : ApiTestBase
     {
         using var client = CreateClient();
 
-        var request = new RestRequest("/users", Method.Post);
+        var request = new RestRequest(ApiEndpoints.Users, Method.Post);
 
         var requestBody = new CreateUserRequest
         {
