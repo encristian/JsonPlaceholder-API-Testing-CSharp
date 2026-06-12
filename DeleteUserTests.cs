@@ -1,5 +1,6 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
 using Reqres_API_Testing_CSharp.Constants;
+using Reqres_API_Testing_CSharp.Helpers;
 using Reqres_API_Testing_CSharp.TestData;
 using System.Net;
 
@@ -12,6 +13,6 @@ public class DeleteUserTests : ApiTestBase
     {
         var response = await DeleteAsync(ApiEndpoints.UserById(UserTestData.ExistingUserId));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        ResponseAssertions.AssertStatusCode(response, HttpStatusCode.OK);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
 using Reqres_API_Testing_CSharp.Constants;
+using Reqres_API_Testing_CSharp.Helpers;
 using Reqres_API_Testing_CSharp.Models;
 using Reqres_API_Testing_CSharp.TestData;
 using System.Net;
@@ -15,8 +16,8 @@ public class CreateUserTests : ApiTestBase
 
         var response = await PostAsync(ApiEndpoints.Users, requestBody);
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-        Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
+        ResponseAssertions.AssertStatusCode(response, HttpStatusCode.Created);
+        ResponseAssertions.AssertContentIsNotEmpty(response);
 
         var createdUser = DeserializeResponse<UserResponse>(response.Content!);
 

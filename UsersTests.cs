@@ -1,5 +1,6 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
 using Reqres_API_Testing_CSharp.Constants;
+using Reqres_API_Testing_CSharp.Helpers;
 using Reqres_API_Testing_CSharp.Models;
 using Reqres_API_Testing_CSharp.TestData;
 using System.Net;
@@ -13,8 +14,8 @@ public class UsersTests : ApiTestBase
     {
         var response = await GetAsync(ApiEndpoints.Users);
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
+        ResponseAssertions.AssertStatusCode(response, HttpStatusCode.OK);
+        ResponseAssertions.AssertContentIsNotEmpty(response);
 
         var users = DeserializeResponse<List<UserResponse>>(response.Content!);
 
@@ -27,8 +28,8 @@ public class UsersTests : ApiTestBase
     {
         var response = await GetAsync(ApiEndpoints.UserById(UserTestData.ExistingUserId));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
+        ResponseAssertions.AssertStatusCode(response, HttpStatusCode.OK);
+        ResponseAssertions.AssertContentIsNotEmpty(response);
 
         var user = DeserializeResponse<UserResponse>(response.Content!);
 
@@ -43,6 +44,6 @@ public class UsersTests : ApiTestBase
     {
         var response = await GetAsync(ApiEndpoints.UserById(UserTestData.NonExistingUserId));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+        ResponseAssertions.AssertStatusCode(response, HttpStatusCode.NotFound);
     }
 }

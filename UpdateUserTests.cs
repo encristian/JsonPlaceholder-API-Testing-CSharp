@@ -1,5 +1,6 @@
 ﻿using Reqres_API_Testing_CSharp.Base;
 using Reqres_API_Testing_CSharp.Constants;
+using Reqres_API_Testing_CSharp.Helpers;
 using Reqres_API_Testing_CSharp.Models;
 using Reqres_API_Testing_CSharp.TestData;
 using System.Net;
@@ -15,8 +16,8 @@ public class UpdateUserTests : ApiTestBase
 
         var response = await PutAsync(ApiEndpoints.UserById(requestBody.Id), requestBody);
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(response.Content, Is.Not.Null.And.Not.Empty);
+        ResponseAssertions.AssertStatusCode(response, HttpStatusCode.OK);
+        ResponseAssertions.AssertContentIsNotEmpty(response);
 
         var updatedUser = DeserializeResponse<UserResponse>(response.Content!);
 
