@@ -31,6 +31,20 @@ public class ApiTestBase
         return await client.ExecuteAsync(request);
     }
 
+    protected async Task<RestResponse> GetAsync(string endpoint, Dictionary<string, string> queryParameters)
+    {
+        using var client = CreateClient();
+
+        var request = new RestRequest(endpoint, Method.Get);
+
+        foreach (var parameter in queryParameters)
+        {
+            request.AddQueryParameter(parameter.Key, parameter.Value);
+        }
+
+        return await client.ExecuteAsync(request);
+    }
+
     protected async Task<RestResponse> PostAsync<TRequest>(string endpoint, TRequest body)
         where TRequest : class
     {
