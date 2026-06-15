@@ -4,7 +4,7 @@ using Reqres_API_Testing_CSharp.Helpers;
 using Reqres_API_Testing_CSharp.TestData;
 using System.Net;
 
-namespace Reqres_API_Testing_CSharp;
+namespace Reqres_API_Testing_CSharp.Tests;
 
 public class DeleteUserTests : ApiTestBase
 {

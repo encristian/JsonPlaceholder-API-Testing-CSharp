@@ -3,7 +3,7 @@ using Reqres_API_Testing_CSharp.Constants;
 using Reqres_API_Testing_CSharp.Helpers;
 using System.Net;
 
-namespace Reqres_API_Testing_CSharp;
+namespace Reqres_API_Testing_CSharp.Tests;
 
 public class NegativeUserTests : ApiTestBase
 {
