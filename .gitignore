@@ -1,4 +1,25 @@
-.vs/
+# Build results
 bin/
 obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Test results
 TestResults/
+*.trx
+
+# Logs
+*.log
+
+# NuGet packages
+*.nupkg
+packages/
+
+# OS files
+.DS_Store
+Thumbs.db
